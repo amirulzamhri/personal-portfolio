@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amirul Zamhri – Portfolio v4</title>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.152.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.152.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="navigation.css" />
+  <link rel="stylesheet" href="portfolio/portfolio_01.css" />
+  <link rel="stylesheet" href="portfolio/portfolio_02.css" />
+  <link rel="stylesheet" href="portfolio/portfolio_03.css" />
+  <link rel="stylesheet" href="portfolio/portfolio_04.css" />
+  <link rel="stylesheet" href="drawing/drawing.css" />
+  <style>
+    @keyframes spinEmblem {
+      from { transform: translate(50%, 50%) rotate(0deg); }
+      to   { transform: translate(50%, 50%) rotate(-360deg); }
+    }
+    .image-section {
+      position: relative;
+      width: 100%;
+      overflow: visible;
+    }
+    .floating-emblem {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: auto;
+      transform: translate(50%, 50%);
+      animation: spinEmblem 10s linear infinite;
+      filter: brightness(0) invert(1);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* –––––– GLOWING ORB –––––– */
+    #glowing-orb {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75vmin;
+      height: 75vmin;
+      max-width: 75vw;
+      max-height: 75vh;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(39, 0, 0, 0.5) 45%, transparent 75%);
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+      animation:
+        fadeInOrb 1.5s ease-out 0.2s forwards,
+        heartbeat 2.5s ease-in-out 1.7s infinite;
+      overflow: visible;
+    }
+
+    @keyframes fadeInOrb {
+      0%   { opacity: 0; }
+      100% { opacity: 0.6; }
+    }
+
+    @keyframes heartbeat {
+      0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+      14%  { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+      28%  { transform: translate(-50%, -50%) scale(1); opacity: 0.65; }
+      42%  { transform: translate(-50%, -50%) scale(1.05); opacity: 0.7; }
+      56%  { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    }
+
+    /* Ripples */
+    #glowing-orb::before,
+    #glowing-orb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(90, 0, 0, 0.301) 0%, transparent 70%);
+      filter: blur(15px);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1);
+      will-change: transform, opacity;
+    }
+
+    #glowing-orb::before {
+      animation: rippleWave1 2.5s ease-out 1.7s infinite;
+    }
+
+    #glowing-orb::after {
+      animation: rippleWave2 2.5s ease-out 1.7s infinite;
+    }
+
+    @keyframes rippleWave1 {
+      0%   { transform: scale(1); opacity: 0; }
+      14%  { transform: scale(1); opacity: 0.8; }
+      25%  { transform: scale(2.5); opacity: 0; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    @keyframes rippleWave2 {
+      0%   { transform: scale(1); opacity: 0; }
+      42%  { transform: scale(1); opacity: 0.8; }
+      53%  { transform: scale(2); opacity: 0; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* –––––– FLIP CLOCK –––––– */
+    .flip-clock-wrapper {
+      position: relative;
+      display: inline-block;
+      height: 1.2em;
+      overflow: visible;
+      perspective: 400px;
+      vertical-align: middle;
+    }
+    .flip-item {
+      position: absolute;
+      top: 0;
+      right: 0;
+      white-space: nowrap;
+      backface-visibility: hidden;
+      transform-origin: center center;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                  opacity 0.6s,
+                  filter 0.6s;
+      will-change: transform, opacity, filter;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="site-navigation">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="#hero" class="logo-link" aria-label="Go to top">
+          <svg class="logo-write" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M51.41,403.6c114.35-33.88,198.76-246.73,243.38-316.31s67.03-78.73,50.32,0-45.23,170.9-39.11,201.95" />
+              <path d="M129.06,242.18c54.59-15.06,103.89-32.25,144.33-55.57,53.79-31.02,31.32-88.37-3.15,10.86-15.53,44.71-28.27,75.11-28.27,75.11,0,0,53.68-42.64,128.03-79.81s82.07-14.19,38.59,47.06c-53.99,76.04-162.35,179.29-221.65,215.53-59.29,36.24-90.35-12.71-4.71-31.53,85.65-18.82,237.65,11.76,266.35-38.12" />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <nav class="nav-links">
+        <a href="#about" class="fixed-cta"><span>About</span><span class="arrow">→</span></a>
+        <a href="#portfolio" class="fixed-cta"><span>Portfolio</span><span class="arrow">→</span></a>
+        <a href="#contact" class="fixed-cta"><span>Contact</span><span class="arrow">→</span></a>
+      </nav>
+
+      <div id="kl-time" class="header-time">
+        <div class="flip-clock-wrapper">
+          <span class="flip-item flip-zone" style="opacity:1; transform:none; filter:blur(0);">KUL UTC+8</span>
+          <span class="flip-item flip-time" style="opacity:0; transform:rotateX(90deg) translateY(20px); filter:blur(4px);"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Blob canvas (lowest layer) -->
+  <canvas id="three-blob-canvas"></canvas>
+
+  <!-- Shape‑wave dot grid canvas (above blob) -->
+  <canvas id="hero-canvas"></canvas>
+
+  <div id="hero" class="hero-section">
+    <div class="marquee-container" id="hero-marquee">
+      <div class="marquee-track" aria-hidden="true">
+        <span>Corporate Whitepapers&emsp;·&emsp;Infographics&emsp;·&emsp;HTML5 Animated Ads&emsp;·&emsp;Brand Identity&emsp;·&emsp;eBooks &amp; Reports&emsp;·&emsp;Presentation Decks&emsp;·&emsp;Social Media Assets&emsp;·&emsp;Print Collateral&emsp;·&emsp;Infographics&emsp;·&emsp;Vector Illustrations&emsp;·&emsp;Event Materials&emsp;·&emsp;</span><span>Corporate Whitepapers&emsp;·&emsp;Infographics&emsp;·&emsp;HTML5 Animated Ads&emsp;·&emsp;Brand Identity&emsp;·&emsp;eBooks &amp; Reports&emsp;·&emsp;Presentation Decks&emsp;·&emsp;Social Media Assets&emsp;·&emsp;Print Collateral&emsp;·&emsp;Infographics&emsp;·&emsp;Vector Illustrations&emsp;·&emsp;Event Materials&emsp;·&emsp;</span>
+      </div>
+
+      <div class="marquee-blur marquee-blur-left"></div>
+      <div class="marquee-blur marquee-blur-right"></div>
+    </div>
+
+    <div id="glowing-orb"></div>
+
+    <div class="content-wrapper">
+      <div class="hero-row"><h1 class="heading hero-text">THOUGHT MADE<br />VISUAL</h1></div>
+      <div class="hero-row"><h2 class="name hero-text">AMIRUL ZAMHRI</h2></div>
+      <div class="hero-row"><p class="subtitle hero-text">Senior Graphic Designer</p></div>
+    </div>
+
+    <div class="mobile-drawing-notice" id="mobile-drawing-notice">
+      <p>✏️</p>
+      <p>You are missing the drawing feature</p>
+      <p>that is only available on desktop</p>
+    </div>
+  </div>
+
+  <canvas id="trail-canvas"></canvas>
+  <canvas id="scribble-canvas"></canvas>
+  <div id="stroke-indicator"></div>
+
+  <div class="drawing-info-panel" id="drawing-info-panel">
+    <div class="panel-content">
+      <ol>
+        <li>Click &amp; drag to draw.</li>
+        <li>Scroll to change stroke size.</li>
+        <li>Refresh page to clear all drawings.</li>
+      </ol>
+    </div>
+    <button class="panel-toggle-btn" id="panel-toggle-btn" aria-label="Toggle drawing info">
+      <span>···</span>
+    </button>
+  </div>
+
+  <div id="custom-cursor" class="custom-cursor">
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="#e03131" xmlns="http://www.w3.org/2000/svg"
+         stroke="#ffffff" stroke-width="1">
+      <path d="M20.5056 10.7754C21.1225 10.5355 21.431 10.4155 21.5176 10.2459C21.5926 10.099 21.5903 9.92446 21.5115 9.77954C21.4205 9.61226 21.109 9.50044 20.486 9.2768L4.59629 3.5728C4.0866 3.38983 3.83175 3.29835 3.66514 3.35605C3.52029 3.40621 3.40645 3.52004 3.35629 3.6649C3.29859 3.8315 3.39008 4.08635 3.57304 4.59605L9.277 20.4858C9.50064 21.1088 9.61246 21.4203 9.77973 21.5113C9.92465 21.5901 10.0991 21.5924 10.2461 21.5174C10.4157 21.4308 10.5356 21.1223 10.7756 20.5054L13.3724 13.8278C13.4194 13.707 13.4429 13.6466 13.4792 13.5957C13.5114 13.5506 13.5508 13.5112 13.5959 13.479C13.6468 13.4427 13.7072 13.4192 13.828 13.3722L20.5056 10.7754Z" />
+    </svg>
+  </div>
+
+  <div class="sections-container">
+    <!-- About / Biography (uses portfolio classes for exact spacing) -->
+    <section id="about" class="section portfolio-section">
+      <div id="biography-01-container" class="portfolio-container"></div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section portfolio-section">
+      <div id="portfolio-01-container" class="portfolio-container"></div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section portfolio-section">
+      <div id="portfolio-02-container" class="portfolio-container"></div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section portfolio-section" id="portfolio-03">
+      <div id="portfolio-03-container" class="portfolio-container"></div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section portfolio-section" id="portfolio-04">
+      <div id="portfolio-04-container" class="portfolio-container"></div>
+    </section>
+
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- Footer text (static, flush with content) -->
+  <div class="footer-text-row">
+    <div class="footer-text-inner">
+      <div class="footer-text-heading">Thank you</div>
+      <div class="footer-text-heading">for visiting.</div>
+      <div class="footer-text-divider"></div>
+      <div class="footer-text-sub">Check my LinkedIn profile</div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="copyright">© 2026 Amirul Zamhri</span>
+      <div id="audio-toggle-container"></div>
+      <a class="fixed-cta" id="linkedin-cta" href="https://www.linkedin.com/in/amirulzamhri/" target="_blank" rel="noopener">
+        <span>LinkedIn</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+  <script src="portfolio/portfolio_01.js"></script>
+  <script src="portfolio/portfolio_02.js"></script>
+  <script src="portfolio/portfolio_03.js"></script>
+  <script src="portfolio/portfolio_04.js"></script>
+  <script src="drawing/drawing.js"></script>
+
+  <!-- Biography loader (fixed, no extra wrappers) -->
+  <script>
+    (function() {
+      const container = document.getElementById('biography-01-container');
+      if (!container) return;
+
+      fetch('portfolio/portfolio_01.html')
+        .then(response => response.text())
+        .then(html => {
+          container.innerHTML = html;
+
+          // Remove gallery and indicator rows
+          const galleryRow = container.querySelector('.gallery-row');
+          const indicatorRow = container.querySelector('.indicator-row');
+          if (galleryRow) galleryRow.remove();
+          if (indicatorRow) indicatorRow.remove();
+
+          // Customise info-col-1: replace project name with bio paragraph
+          const infoCol1 = container.querySelector('.info-col-1');
+          if (infoCol1) {
+            const projectType = infoCol1.querySelector('.project-type');
+            if (projectType) projectType.remove();
+            const projectName = infoCol1.querySelector('.project-name');
+            if (projectName) {
+              const bioText = document.createElement('p');
+              bioText.className = 'project-desc';
+              bioText.innerHTML = 'I am a Kuala Lumpur-based Graphic Designer with nearly five years of experience in corporate and B2B design. Over my career, I have grown from handling daily layout production to leading design projects from concept to final delivery. My work covers a wide range of marketing materials, including long-form reports, infographics, presentation templates, branding, and digital ads.<br><br>Beyond technical execution, I am comfortable managing client relationships, working through feedback loops, and ensuring that every design aligns clearly with business goals and brand guidelines.';
+              projectName.replaceWith(bioText);
+            }
+          }
+
+          // Customise info-col-3: add profile image and emblem
+          const infoCol3 = container.querySelector('.info-col-3');
+          if (infoCol3) {
+            const oldDesc = infoCol3.querySelector('.project-desc');
+            if (oldDesc) oldDesc.remove();
+
+            const imageSection = document.createElement('div');
+            imageSection.className = 'image-section';
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            wrapper.style.width = '100%';
+            wrapper.style.aspectRatio = '4 / 5';
+            wrapper.style.overflow = 'hidden';
+
+            const img = document.createElement('img');
+            img.src = 'images/Profile_Image.jpeg';
+            img.alt = 'Amirul Zamhri';
+            img.style.display = 'block';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.objectPosition = '50% 25%';
+
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 70%)';
+            overlay.style.pointerEvents = 'none';
+            overlay.style.zIndex = '2';
+
+            wrapper.appendChild(img);
+            wrapper.appendChild(overlay);
+            imageSection.appendChild(wrapper);
+
+            const emblem = document.createElement('img');
+            emblem.src = 'images/LogoEmblem.svg';
+            emblem.alt = 'Logo emblem';
+            emblem.className = 'floating-emblem';
+            imageSection.appendChild(emblem);
+
+            // Blur‑in emblem on scroll
+            const emblemEl = imageSection.querySelector('.floating-emblem');
+            if (emblemEl) {
+              emblemEl.style.filter = 'brightness(0) invert(1) blur(4px)';
+              emblemEl.style.transition = 'filter 1.2s ease';
+              const emblemObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                    emblemEl.style.filter = 'brightness(0) invert(1) blur(0px)';
+                    emblemEl.style.animationPlayState = 'running';
+                    emblemObserver.unobserve(entry.target);
+                  }
+                });
+              }, { threshold: 0.5 });
+              emblemObserver.observe(emblemEl);
+            }
+
+            infoCol3.appendChild(imageSection);
+          }
+        })
+        .catch(err => console.error('Biography section failed to load:', err));
+    })();
+  </script>
+
+  <!-- Flip Clock Logic -->
+  <script>
+    (function() {
+      const zoneSpan = document.querySelector('.flip-zone');
+      const timeSpan = document.querySelector('.flip-time');
+      if (!zoneSpan || !timeSpan) return;
+
+      let showZone = true;
+      let swapTimeout;
+
+      function getDirection(toZone) {
+        return toZone ? 1 : -1;
+      }
+
+      function getExitTransform(direction) {
+        const y = direction * 20;
+        const rotate = direction * 90;
+        return `rotateX(${rotate}deg) translateY(${y}px)`;
+      }
+
+      function getEnterTransform(direction) {
+        const y = direction * 20;
+        const rotate = direction * 90;
+        return `rotateX(${rotate}deg) translateY(${y}px)`;
+      }
+
+      function formatTime() {
+        const now = new Date();
+        return now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kuala_Lumpur',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        });
+      }
+
+      function updateTimeText() {
+        timeSpan.textContent = formatTime();
+      }
+      updateTimeText();
+      setInterval(updateTimeText, 1000);
+
+      function swap() {
+        const toZone = !showZone;
+        const direction = getDirection(toZone);
+
+        const entering = toZone ? zoneSpan : timeSpan;
+        const exiting = toZone ? timeSpan : zoneSpan;
+
+        entering.style.transition = 'none';
+        entering.style.transform = getEnterTransform(direction);
+        entering.style.opacity = '0';
+        entering.style.filter = 'blur(4px)';
+
+        entering.offsetHeight;
+
+        entering.style.transition = '';
+        entering.style.transform = 'none';
+        entering.style.opacity = '1';
+        entering.style.filter = 'blur(0px)';
+
+        exiting.style.transition = '';
+        exiting.style.transform = getExitTransform(direction);
+        exiting.style.opacity = '0';
+        exiting.style.filter = 'blur(4px)';
+
+        showZone = toZone;
+        clearTimeout(swapTimeout);
+        swapTimeout = setTimeout(swap, 2500);
+      }
+
+      swapTimeout = setTimeout(swap, 2500);
+    })();
+  </script>
+
+  <!-- Footer text reveal (same blur-in effect as sections) -->
+  <script>
+    (function() {
+      const footerTextRow = document.querySelector('.footer-text-row');
+      if (!footerTextRow) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('footer-text-visible');
+          } else {
+            entry.target.classList.remove('footer-text-visible');
+          }
+        });
+      }, { threshold: 0 });
+
+      observer.observe(footerTextRow);
+    })();
+  </script>
+
+  <!-- LinkedIn CTA blink when second line is visible -->
+  <script>
+    (function() {
+      const secondLine = document.querySelector('.footer-text-sub');
+      const linkedinCta = document.getElementById('linkedin-cta');
+      if (!secondLine || !linkedinCta) return;
+
+      let blinkInterval = null;
+
+      function startBlinking() {
+        blinkInterval = setInterval(() => {
+          linkedinCta.classList.toggle('blink-active');
+        }, 600);
+      }
+
+      function stopBlinking() {
+        if (blinkInterval) {
+          clearInterval(blinkInterval);
+          blinkInterval = null;
+        }
+        linkedinCta.classList.remove('blink-active');
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            startBlinking();
+          } else {
+            stopBlinking();
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(secondLine);
+    })();
+  </script>
+</body>
+</html>

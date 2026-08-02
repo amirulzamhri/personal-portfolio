@@ -1,0 +1,256 @@
+/* –––––– (same base layout as portfolio_01, extended with compare styles) –––––– */
+
+.portfolio-section {
+  width: 100%;
+  padding: 4rem 2rem;
+  color: #fff;
+  font-family: 'SourceSans3', sans-serif;
+}
+.portfolio-container { max-width: 1200px; margin: 0 auto; }
+
+/* –––––– ROW BLUR EFFECT (always visible) –––––– */
+.portfolio-row {
+  filter: blur(0);
+  opacity: 1;
+  transition: none;
+}
+
+/* –––––– COMPARE BAR (outside gallery) –––––– */
+.compare-bar {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0 1rem;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.compare-label-left,
+.compare-label-right {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.compare-knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;                         /* initial, will be updated via JS */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e03131;
+  transform: translate(-50%, -50%);
+  cursor: ew-resize;
+  z-index: 5;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition: none;
+}
+
+/* –––––– GALLERY ROW –––––– */
+.gallery-row { margin-bottom: 0.2rem; }
+
+.gallery {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+  position: relative;
+  border-radius: 0;
+}
+
+.gallery-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* –––––– BASE GALLERY SLIDE (for crossfade) –––––– */
+.gallery-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+.gallery-slide.active {
+  opacity: 1;
+}
+
+/* –––––– COMPARISON CONTAINER –––––– */
+.compare-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.compare-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The "after" image is clipped from the left by a moving inset */
+.compare-after-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0 0 0 50%);   /* start at 50% */
+  transition: none;
+}
+
+.compare-after-wrap .compare-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Vertical line that moves with the split */
+.compare-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  pointer-events: none;
+  z-index: 2;
+  transition: none;
+}
+
+/* –––––– INDICATORS – line bars, larger click area –––––– */
+.indicators {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.indicator {
+  position: relative;
+  display: inline-block;
+  height: 24px;
+  width: 40px;
+  vertical-align: middle;
+  cursor: pointer;
+  background: transparent;
+}
+
+.indicator::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.3s ease, width 0.3s ease;
+}
+
+.indicator:hover::after {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.indicator.active { width: 60px; }
+.indicator.active::after { background: #e03131; }
+
+/* –––––– INFO ROW –––––– */
+.info-row {
+  display: grid;
+  grid-template-columns: minmax(0, 500px) 1fr minmax(0, 500px);
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+.info-col-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-name {
+  font-family: 'OldschoolGrotesk', sans-serif;
+  font-weight: 400;
+  font-size: 36pt;
+  line-height: 1.15;
+  margin-bottom: 0;
+}
+.brand-name {
+  font-weight: 700;
+}
+.project-type {
+  font-size: 18pt;
+  color: #a1a1aa;
+  text-transform: capitalize;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  line-height: 1.2;
+}
+.info-col-3 { display: flex; align-items: flex-start; }
+.project-desc {
+  font-size: 18pt;
+  line-height: 1.45;
+  color: #d4d4d8;
+  opacity: 0.6;
+}
+
+/* –––––– RESPONSIVE –––––– */
+@media (max-width: 768px) {
+  .portfolio-section {
+    padding: 3rem 1.5rem;
+  }
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .project-name {
+    font-size: 26pt;
+    line-height: 1.15;
+  }
+  .project-type {
+    font-size: 15pt;
+    line-height: 1.2;
+  }
+  .project-desc {
+    font-size: 15pt;
+    line-height: 1.4;
+  }
+  .indicators {
+    gap: 0.3rem;
+  }
+  .indicator {
+    width: 32px;
+    height: 20px;
+  }
+  .indicator.active {
+    width: 48px;
+  }
+  .compare-bar {
+    height: 40px;
+    padding: 0 0.8rem;
+  }
+  .compare-knob {
+    width: 28px;
+    height: 28px;
+  }
+}

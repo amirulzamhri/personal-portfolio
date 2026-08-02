@@ -1,0 +1,90 @@
+/* –––––– NAVIGATION BAR (logo / links / time) –––––– */
+
+/* Logo (left) */
+.header-left {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+}
+
+/* Logo link (no underline, keep cursor) */
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* The SVG logo – white strokes, sized nicely */
+.logo-write {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+/* Every shape inside the logo gets the dash‑array animation */
+.logo-write path,
+.logo-write circle,
+.logo-write line,
+.logo-write polyline,
+.logo-write polygon,
+.logo-write rect {
+  stroke-dasharray: 4000;
+  stroke-dashoffset: 4000;
+  animation: logoWrite 5s ease-in-out infinite;
+  transition: stroke 0.3s ease;
+}
+
+/* Active state (touch / mouse press) – momentary red */
+.logo-link:active .logo-write path,
+.logo-link:active .logo-write circle,
+.logo-link:active .logo-write line,
+.logo-link:active .logo-write polyline,
+.logo-link:active .logo-write polygon,
+.logo-link:active .logo-write rect {
+  stroke: #e03131;
+}
+
+/* Hover state only for devices that support true hover */
+@media (hover: hover) {
+  .logo-link:hover .logo-write path,
+  .logo-link:hover .logo-write circle,
+  .logo-link:hover .logo-write line,
+  .logo-link:hover .logo-write polyline,
+  .logo-link:hover .logo-write polygon,
+  .logo-link:hover .logo-write rect {
+    stroke: #e03131;
+  }
+}
+
+/* Write → hold → rewind loop */
+@keyframes logoWrite {
+  0%   { stroke-dashoffset: 4000; }
+  40%  { stroke-dashoffset: 0; }
+  55%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 4000; }
+}
+
+/* Navigation links (center) */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-self: center;
+}
+.nav-links .fixed-cta {
+  margin-left: 0;
+  padding: 0.3rem 0.8rem;
+}
+
+/* –––––– MOBILE (≤ 480px) – closer CTAs –––––– */
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 0.4rem;
+  }
+  .nav-links .fixed-cta {
+    padding: 0.3rem 0.4rem;
+    font-size: 9pt;
+  }
+}

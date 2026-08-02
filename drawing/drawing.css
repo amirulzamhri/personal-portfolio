@@ -1,0 +1,156 @@
+/* –––––– DRAWING‑RELATED STYLES –––––– */
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  z-index: 10;               /* 👈 reduced from 9999 */
+  color: #e03131;
+  will-change: transform;
+  opacity: 0;
+}
+.custom-cursor.active { opacity: 1; }
+.custom-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));
+}
+
+/* Cursor trail canvas */
+#trail-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;               /* 👈 reduced from 9998 */
+}
+
+/* Scribble canvas */
+#scribble-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;               /* 👈 reduced from 9996 */
+}
+
+/* Stroke size indicator */
+#stroke-indicator {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10;               /* 👈 reduced from 9997 */
+  border: 1px solid rgba(224, 49, 49, 0.8);
+  border-radius: 50%;
+  background: rgba(224, 49, 49, 0.1);
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+/* –––––– DRAWING INFO PANEL (desktop) –––––– */
+
+/* Panel container – fixed, slides left/right, sharp corners */
+.drawing-info-panel {
+  position: fixed;
+  top: 50%;
+  left: -260px;                 /* hidden fully: button (25px) visible */
+  transform: translateY(-50%);
+  z-index: 15;                  /* 👈 reduced from 10000 – below header/footer but above drawing layers */
+  width: 260px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(224, 49, 49, 0.3);
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 0 8px rgba(224, 49, 49, 0.4);
+  animation: pulseGlow 2s ease-in-out infinite;
+  pointer-events: auto;
+}
+
+/* Pulsating red glow */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(224, 49, 49, 0.3); }
+  50%      { box-shadow: 0 0 14px rgba(224, 49, 49, 0.8); }
+}
+
+/* Content area – symmetrical padding, single-line items */
+.panel-content {
+  flex: 1;
+  padding: 20px;
+  font-family: 'SourceSans3', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #fff;
+}
+.panel-content ol {
+  margin: 0;
+  padding: 0 0 0 8px;
+  list-style-position: inside;
+  white-space: nowrap;
+}
+.panel-content li {
+  padding-left: 6px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* Toggle button – attached to the right edge, full height */
+.panel-toggle-btn {
+  position: absolute;
+  right: -25px;
+  top: 0;
+  bottom: 0;
+  width: 25px;
+  background: rgba(50, 50, 50, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: none;
+  border-radius: 0;
+  cursor: grab;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+}
+
+.panel-toggle-btn:active {
+  cursor: grabbing;
+}
+
+.panel-toggle-btn:hover {
+  background: rgba(80, 80, 80, 0.95);
+  color: #fff;
+}
+
+/* Vertical three dots */
+.panel-toggle-btn span {
+  display: block;
+  transform: rotate(90deg);
+  font-size: 18px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Hide panel on mobile */
+@media (max-width: 480px) {
+  .drawing-info-panel,
+  .panel-toggle-btn,
+  #custom-cursor,
+  #trail-canvas,
+  #scribble-canvas,
+  #stroke-indicator {
+    display: none;
+  }
+}
