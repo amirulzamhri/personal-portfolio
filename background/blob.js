@@ -219,11 +219,29 @@ export function initBlob(canvasId) {
   );
   blobScene.add(blob);
 
+  // ── ZOOM-IN EFFECT ──
+  const ZOOM_DURATION = 1.5; // seconds
+  blob.scale.set(0.01, 0.01, 0.01); // start almost invisible
+  let zoomStartTime = performance.now();
+
   // Animation loop
   const blobClock = new THREE.Clock();
   (function animateBlob() {
     const dt = blobClock.getDelta();
     requestAnimationFrame(animateBlob);
+
+    // Smooth zoom-in via mesh scale
+    const elapsed = (performance.now() - zoomStartTime) / 1000;
+    if (elapsed < ZOOM_DURATION) {
+      const t = elapsed / ZOOM_DURATION; // 0 → 1
+      // ease-out quart (adjust as desired)
+      const ease = 1 - Math.pow(1 - t, 4);
+      const s = 0.01 + ease * (1.0 - 0.01);
+      blob.scale.set(s, s, s);
+    } else {
+      blob.scale.set(1, 1, 1); // final size
+    }
+
     u.uTime.value += dt;
     blobRenderer.render(blobScene, blobCamera);
   })();
@@ -235,5 +253,5 @@ export function initBlob(canvasId) {
     blobRenderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  console.log('✨ 3D noise blob initialised');
+  console.log('✨ 3D noise blob initialised (zoom-in ready)');
 }
