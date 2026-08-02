@@ -688,13 +688,14 @@ html {
 
 .footer-text-sub {
   font-family: 'SourceSans3', sans-serif;
-  font-weight: 300;
+  font-weight: 400;            /* updated from 300 */
   font-size: 24px;
   text-transform: none;
   color: #d4d4d8;
   margin-top: 0;
 }
 
+/* –––––– MOBILE ADJUSTMENTS –––––– */
 @media (max-width: 768px) {
   .footer-text-heading {
     font-size: clamp(2.4rem, 8.4vmin, 9.6rem);
@@ -704,7 +705,7 @@ html {
     margin: 1.5rem auto;
   }
   .footer-text-sub {
-    font-size: 18px;
+    font-size: 16px;           /* changed from 18px */
   }
 }
 
