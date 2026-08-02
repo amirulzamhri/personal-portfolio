@@ -368,6 +368,7 @@ html {
 #linkedin-cta {
   justify-self: end;
   margin-left: 0;
+  padding-right: 0;            /* align text/arrow flush with grid edge */
 }
 
 /* –––––– GLASS PANEL (audio) –––––– */
@@ -693,7 +694,7 @@ html {
   text-transform: none;
   color: #d4d4d8;
   margin-top: 0;
-  opacity: 0.6;               /* added 60% opacity */
+  opacity: 0.6;               /* 60% opacity for a lighter look */
 }
 
 /* –––––– MOBILE ADJUSTMENTS –––––– */
@@ -706,9 +707,7 @@ html {
     margin: 1.5rem auto;
   }
   .footer-text-sub {
-    font-size: 16px;           /* mobile size */
-    /* opacity inherits from the base rule unless overridden,
-       but we can reaffirm it if needed; it will stay 0.6 */
+    font-size: 16px;           /* smaller on mobile */
   }
 }
 
