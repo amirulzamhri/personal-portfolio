@@ -196,7 +196,14 @@ if (portfolioLink) {
   });
 }
 
-// (Contact CTA uses default anchor scroll – no extra handler needed)
-
+// 4. Contact CTA → scroll to footer text
+const contactLink = document.querySelector('#site-navigation a[href="#contact"]');
+if (contactLink) {
+  contactLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.getElementById('contact');   // now exists in the HTML
+    smoothScrollToElement(target, 'center', 0.0);       // adjust mobile offset if needed
+  });
+}
 
 console.log('✨ Clean setup: background modules loaded + UI.');
