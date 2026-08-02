@@ -255,8 +255,8 @@
     <div class="section-divider"></div>
   </div>
 
-  <!-- Footer text (static, flush with content) -->
-  <div class="footer-text-row">
+  <!-- Footer text – now with id="contact" for the nav link -->
+  <div class="footer-text-row" id="contact">
     <div class="footer-text-inner">
       <div class="footer-text-heading">Thank you</div>
       <div class="footer-text-heading">for visiting.</div>
@@ -283,7 +283,7 @@
   <script src="portfolio/portfolio_04.js"></script>
   <script src="drawing/drawing.js"></script>
 
-  <!-- Biography loader (fixed, no extra wrappers) -->
+  <!-- Biography loader (unchanged) -->
   <script>
     (function() {
       const container = document.getElementById('biography-01-container');
@@ -294,13 +294,11 @@
         .then(html => {
           container.innerHTML = html;
 
-          // Remove gallery and indicator rows
           const galleryRow = container.querySelector('.gallery-row');
           const indicatorRow = container.querySelector('.indicator-row');
           if (galleryRow) galleryRow.remove();
           if (indicatorRow) indicatorRow.remove();
 
-          // Customise info-col-1: replace project name with bio paragraph
           const infoCol1 = container.querySelector('.info-col-1');
           if (infoCol1) {
             const projectType = infoCol1.querySelector('.project-type');
@@ -314,7 +312,6 @@
             }
           }
 
-          // Customise info-col-3: add profile image and emblem
           const infoCol3 = container.querySelector('.info-col-3');
           if (infoCol3) {
             const oldDesc = infoCol3.querySelector('.project-desc');
@@ -357,7 +354,6 @@
             emblem.className = 'floating-emblem';
             imageSection.appendChild(emblem);
 
-            // Blur‑in emblem on scroll
             const emblemEl = imageSection.querySelector('.floating-emblem');
             if (emblemEl) {
               emblemEl.style.filter = 'brightness(0) invert(1) blur(4px)';
@@ -456,7 +452,7 @@
     })();
   </script>
 
-  <!-- Footer text reveal (same blur-in effect as sections) -->
+  <!-- Footer text reveal observer -->
   <script>
     (function() {
       const footerTextRow = document.querySelector('.footer-text-row');
