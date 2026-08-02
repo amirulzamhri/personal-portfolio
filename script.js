@@ -7,9 +7,33 @@ import { initDotGrid } from './background/dotgrid.js';
 initBlob('three-blob-canvas');
 initDotGrid('hero-canvas');
 
+/* ===================================================
+   LENIS SMOOTH SCROLL
+   =================================================== */
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ease-out-expo
+  smoothWheel: true,
+  wheelMultiplier: 1,
+  smoothTouch: false,        // keep native scroll on mobile
+});
+
+// RAF loop
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// Helper for navigation links
+function lenisScrollTo(target) {
+  const el = typeof target === 'string' ? document.querySelector(target) : target;
+  if (el) lenis.scrollTo(el, { offset: -70 });
+}
+
 
 /* ===================================================
-   SECTION 3 – AUDIO & UI (unchanged)
+   AUDIO & UI (unchanged)
    =================================================== */
 const BG_AUDIO_URL = 'https://assets.mixkit.co/music/292/292.mp3';
 const bgAudio = new Audio(BG_AUDIO_URL);
@@ -98,11 +122,10 @@ if(notice){
   window.addEventListener('beforeunload', ()=>{ if(hideTimer) clearTimeout(hideTimer); });
 }
 
-// Hero text blur-in + header reveal (instant class removal)
+// Hero text blur-in + header reveal
 window.addEventListener('DOMContentLoaded', ()=>{
   document.querySelectorAll('.hero-text').forEach(el => el.classList.add('hero-visible'));
 
-  // Header blurs clear immediately – same as footer‑text-visible toggle
   const header = document.querySelector('.header');
   if (header) header.classList.remove('header-blurred');
 });
@@ -150,64 +173,43 @@ if(navCtas.length){
 
 
 /* ===================================================
-   CUSTOM SMOOTH SCROLL HANDLERS
+   NAVIGATION SCROLL HANDLERS (using Lenis)
    =================================================== */
 
-// Helper: desktop centres, mobile uses adjustable offset
-function smoothScrollToElement(targetEl, desktopBlock = 'center', mobileOffset = -0.12) {
-  if (!targetEl) return;
-  const isDesktop = window.innerWidth > 768;
-
-  if (isDesktop) {
-    targetEl.scrollIntoView({ behavior: 'smooth', block: desktopBlock });
-  } else {
-    const headerHeight = 70;
-    const extraOffset = window.innerHeight * mobileOffset;
-    const top = targetEl.getBoundingClientRect().top + window.pageYOffset;
-    window.scrollTo({
-      top: top - headerHeight - extraOffset,
-      behavior: 'smooth'
-    });
-  }
-}
-
-// 1. Logo → top of page
+// 1. Logo → top
 const logoLink = document.querySelector('.logo-link');
 if (logoLink) {
   logoLink.addEventListener('click', (e) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Lenis will handle it
   });
 }
 
-// 2. About CTA (mobile offset -0.12)
+// 2. About CTA
 const aboutLink = document.querySelector('#site-navigation a[href="#about"]');
 if (aboutLink) {
   aboutLink.addEventListener('click', (e) => {
     e.preventDefault();
-    const target = document.getElementById('about');
-    smoothScrollToElement(target, 'center', -0.1);
+    lenisScrollTo('#about');
   });
 }
 
-// 3. Portfolio CTA (mobile offset 0.0)
+// 3. Portfolio CTA
 const portfolioLink = document.querySelector('#site-navigation a[href="#portfolio"]');
 if (portfolioLink) {
   portfolioLink.addEventListener('click', (e) => {
     e.preventDefault();
-    const target = document.getElementById('portfolio-01-container');
-    smoothScrollToElement(target, 'center', 0.0);
+    lenisScrollTo('#portfolio-01-container');
   });
 }
 
-// 4. Contact CTA → scroll to footer text
+// 4. Contact CTA
 const contactLink = document.querySelector('#site-navigation a[href="#contact"]');
 if (contactLink) {
   contactLink.addEventListener('click', (e) => {
     e.preventDefault();
-    const target = document.getElementById('contact');
-    smoothScrollToElement(target, 'center', 0.0);
+    lenisScrollTo('#contact');
   });
 }
 
-console.log('✨ Clean setup: background modules loaded + UI.');
+console.log('✨ Lenis smooth scroll activated');
