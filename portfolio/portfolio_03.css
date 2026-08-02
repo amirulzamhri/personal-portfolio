@@ -154,7 +154,7 @@
     margin-top: 2rem;
   }
   .project-name {
-    font-size: 26pt;        /* reduced from 36pt */
+    font-size: 24px;        /* changed from 26pt */
     line-height: 1.15;
   }
   .project-type {
