@@ -57,6 +57,7 @@ html, body {
 
 html {
   scroll-padding-top: var(--header-height);
+  /* NOTE: scroll-behavior is removed because Lenis handles it */
 }
 
 /* –––––– BLOB CANVAS (lowest layer) –––––– */
@@ -99,7 +100,6 @@ html {
   padding: 0.8rem 0;
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
-  /* Smooth reveal matching the footer text */
   transition: filter 0.8s ease, opacity 0.8s ease;
 }
 
@@ -112,13 +112,12 @@ html {
   padding: 0.6rem 2rem;
 }
 
-/* Initial blurred state (identical to footer‑text start) */
+/* Initial blurred state */
 .header-blurred {
   filter: blur(10px);
   opacity: 0;
 }
 
-/* After the class is removed, normal state – matches footer‑text‑visible */
 .header:not(.header-blurred) {
   filter: blur(0);
   opacity: 1;
@@ -193,7 +192,6 @@ html {
   }
 }
 
-/* Blink state – exactly the same as hover, used by JS */
 .fixed-cta.blink-active {
   color: #e03131 !important;
   font-weight: 700 !important;
@@ -222,7 +220,6 @@ html {
   z-index: 10;
 }
 
-/* –––––– TEXT GROUP (unified block) –––––– */
 .hero-text-group {
   display: flex;
   flex-direction: column;
@@ -326,7 +323,7 @@ html {
   );
 }
 
-/* –––––– FOOTER (fixed bar, same blur‑in as sections) –––––– */
+/* –––––– FOOTER (fixed bar) –––––– */
 .footer {
   position: fixed;
   bottom: 0;
