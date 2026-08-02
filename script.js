@@ -14,7 +14,7 @@ initDotGrid('hero-canvas');
 const BG_AUDIO_URL = 'https://assets.mixkit.co/music/292/292.mp3';
 const bgAudio = new Audio(BG_AUDIO_URL);
 bgAudio.loop = true;
-bgAudio.volume = 1.0;          // ← changed from 0.25 to 1.0
+bgAudio.volume = 1.0;
 bgAudio.autoplayStarted = false;
 
 function tryAudio(){
@@ -22,7 +22,7 @@ function tryAudio(){
     bgAudio.play().then(()=>{ bgAudio.autoplayStarted=true; updateAudioToggleUI(); }).catch(()=>{});
   }
 }
-window.tryAudio = tryAudio;  // for the dot-grid click handler
+window.tryAudio = tryAudio;
 window.addEventListener('touchstart', tryAudio, {passive:true});
 window.addEventListener('click', tryAudio);
 window.addEventListener('touchstart', ()=>{ if(navigator.vibrate) navigator.vibrate(10); }, {passive:true});
@@ -98,18 +98,22 @@ if(notice){
   window.addEventListener('beforeunload', ()=>{ if(hideTimer) clearTimeout(hideTimer); });
 }
 
-// Hero text blur-in
+// Hero text blur-in + header reveal (instant class removal)
 window.addEventListener('DOMContentLoaded', ()=>{
   document.querySelectorAll('.hero-text').forEach(el => el.classList.add('hero-visible'));
+
+  // Header blurs clear immediately – same as footer‑text-visible toggle
+  const header = document.querySelector('.header');
+  if (header) header.classList.remove('header-blurred');
 });
 
 // LinkedIn CTA
 const linkedCta = document.getElementById('linkedin-cta');
 if(linkedCta){
   const hoverSound = new Audio('audio/CTA-Mouse-Over.mp3');
-  hoverSound.volume = 1.0;      // ← explicit 100% volume
+  hoverSound.volume = 1.0;
   const clickSound = new Audio('audio/CTA-Click.mp3');
-  clickSound.volume = 1.0;      // ← explicit 100% volume
+  clickSound.volume = 1.0;
 
   linkedCta.addEventListener('mouseenter', ()=>{
     hoverSound.pause(); hoverSound.currentTime=0; hoverSound.play().catch(()=>{});
@@ -130,9 +134,9 @@ if(linkedCta){
 const navCtas = document.querySelectorAll('#site-navigation .fixed-cta');
 if(navCtas.length){
   const hoverS = new Audio('audio/CTA-Mouse-Over.mp3');
-  hoverS.volume = 1.0;          // ← explicit 100% volume
+  hoverS.volume = 1.0;
   const clickS = new Audio('audio/CTA-Click.mp3');
-  clickS.volume = 1.0;          // ← explicit 100% volume
+  clickS.volume = 1.0;
 
   navCtas.forEach(cta => {
     cta.addEventListener('mouseenter', ()=>{
@@ -201,8 +205,8 @@ const contactLink = document.querySelector('#site-navigation a[href="#contact"]'
 if (contactLink) {
   contactLink.addEventListener('click', (e) => {
     e.preventDefault();
-    const target = document.getElementById('contact');   // now exists in the HTML
-    smoothScrollToElement(target, 'center', 0.0);       // adjust mobile offset if needed
+    const target = document.getElementById('contact');
+    smoothScrollToElement(target, 'center', 0.0);
   });
 }
 
