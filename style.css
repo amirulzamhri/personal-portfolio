@@ -693,6 +693,7 @@ html {
   text-transform: none;
   color: #d4d4d8;
   margin-top: 0;
+  opacity: 0.6;               /* added 60% opacity */
 }
 
 /* –––––– MOBILE ADJUSTMENTS –––––– */
@@ -705,7 +706,9 @@ html {
     margin: 1.5rem auto;
   }
   .footer-text-sub {
-    font-size: 16px;           /* changed from 18px */
+    font-size: 16px;           /* mobile size */
+    /* opacity inherits from the base rule unless overridden,
+       but we can reaffirm it if needed; it will stay 0.6 */
   }
 }
 
